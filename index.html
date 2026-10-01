@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Pinneberg</title>
+<style>
+html,body{margin:0;padding:0;height:100%;background:#fff;color:#000;
+-webkit-text-size-adjust:none;-webkit-tap-highlight-color:transparent}
+body{font-family:sans-serif;-webkit-user-select:none;-webkit-touch-callout:none}
+#seite{height:100%;-webkit-box-sizing:border-box;padding:34px 30px 22px;
+display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-pack:justify;
+text-align:center;line-height:1.15}
+.kopf{-webkit-box-flex:0}
+.woche{font-size:52px;font-weight:normal;color:#555;letter-spacing:1px}
+.datum{font-size:34px;color:#555;margin-top:4px}
+.uhr{-webkit-box-flex:0;margin-top:10px}
+.zeit{font-size:170px;font-weight:normal;letter-spacing:-2px;line-height:1}
+.linie{height:1px;background:#bbb;margin:26px 40px 22px}
+.wetter{-webkit-box-flex:0}
+.wzeile{-webkit-box;display:-webkit-box;-webkit-box-orient:horizontal;
+-webkit-box-pack:center;-webkit-box-align:center}
+.wicon{width:96px;height:96px;-webkit-box-flex:0}
+.wicon svg{width:96px;height:96px;display:block}
+.wtemp{font-size:56px;-webkit-box-flex:0;margin-left:22px}
+.wzeile2{font-size:28px;color:#555;margin-top:10px}
+.wzeile3{font-size:24px;color:#666;margin-top:4px}
+.spruch{-webkit-box-flex:0;margin:26px 30px 0;padding:18px 16px;border:1px solid #999}
+.stext{font-size:38px;line-height:1.25}
+.sautor{font-size:24px;color:#666;margin-top:10px}
+.fuss{-webkit-box-flex:0;font-size:20px;color:#666;margin-top:24px}
+.status{-webkit-box-flex:0;font-size:20px;color:#666;margin-top:6px;min-height:26px}
+</style>
+</head>
+<body>
+<div id="seite">
+
+  <div class="kopf" id="kopf">
+    <div class="woche" id="woche">&nbsp;</div>
+    <div class="datum" id="datum">&nbsp;</div>
+  </div>
+
+  <div class="uhr">
+    <div class="zeit" id="zeit">--:--</div>
+  </div>
+
+  <div class="linie" id="linie"></div>
+
+  <div class="wetter" id="wetter">
+    <div class="wzeile">
+      <div class="wicon" id="wicon"></div>
+      <div class="wtemp" id="wtemp">&nbsp;</div>
+    </div>
+    <div class="wzeile2" id="wtext">&nbsp;</div>
+    <div class="wzeile3" id="wdetail">&nbsp;</div>
+  </div>
+
+  <div class="spruch" id="spruch">
+    <div class="stext" id="stext">&nbsp;</div>
+    <div class="sautor" id="sautor">&nbsp;</div>
+  </div>
+
+  <div class="fuss" id="fuss">Pinneberg</div>
+  <div class="status" id="status">&nbsp;</div>
+
+</div>
+
+<script>
+var WD=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+var MO=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var SPRUECHE=[
+'Abendstille, Segenwille.','Alle Dinge sind schwierig vor der Zeit.','Anderes Glück, anderer Schmerz.',
+'Alsobald, alsobald kehret der Sommer.','Auch ein kleiner Umzug ist ein Umzug.',
+'Bedienung macht den Kunden.','Besser ein Bett im Frieden als ein Thron in der Angst.',
+'Bett und Podest sind himmelweit verschieden.',
+'Bleib nicht auf halbem Wege stehen.','Blinde Liebe macht blind.',
+'Brot und Salz, das ist genug, aber Liebe macht reich.','Da liegen die Hosen nicht, wo man sie hingestellt hat.',
+'Das Alte soll man ehren, das Neue soll man meiden.','Das Einhorn ist ein Pferd mit einer Hornstoßwunde.',
+'Das Glück hängt jedem zu gern an.','Das Glück liegt auf der Straße.',
+'Das Glück lacht einem aus dem Gesicht.','Das Glück ist das Einzige, das sich verdoppelt, wenn man es teilt.',
+'Das Land, wo die Burgen grünen.','Das Leben ist ein Schachspiel.','Der Ausgang eines Rennens hängt von der Startlinie ab.',
+'Der beste Freund ist der, der dir nur die Wahrheit sagt.','Der Eigene ist ihm lieber als der Fremde.',
+'Der Mensch ist, was er isst.','Der Mund ist des Herzens Spiegel.',
+'Der Plan ist gut, die Tat ist schwer.','Der Bauer hat keine Freunde, aber der Hahn schon.',
+'Der Weg ist mir zu weit.','Die Alten sind nicht verloren, nur noch nicht wiedergefunden.',
+'Die Jugend ist die schönste Zeit, wenn man sie überlebt.','Die kleinen Dinge machen den Tag.',
+'Die Welt ist rund und die Zeit verläuft schnell.','Drei Mal darfst du klopfen.',
+'Du sollst nicht nach dem Ende schauen, nur nach dem Anfang.','Ein Ei in der Hand ist besser als zehn im Busch.',
+'Ein jeder hat sein Kreuz zu tragen.','Ein Käfig ging einen Vogel suchen.',
+'Ein Kopf, ein Wille, ein Ziel.','Ein Mal umgekehrt und umgekehrt – nein.',
+'Ein Unglück kommt nie allein.','Eine Hand, die einem die Arbeit abnimmt, ist Gold wert.',
+'Erst das Brot, dann die Moral.','Erst ändern, dann tun.','Es ist gescheiter, zu sterben, als zu leben wie ein Vieh.',
+'Es ist nicht alles Gold, was glänzt.','Es ist schwer, nichts zu sagen und wohlfeil, wenig.',
+'Etwas mehr Gleichgültigkeit, mehr Frieden.','Falsche Freunde sind schlimmer als Feinde.',
+'Fürchte nichts, erlaube nichts, verwehre nichts.','Ganz allein ist schwer, gar nicht allein ist leichter.',
+'Glück entsteht oft durch Unglück.','Große Dinge sind selten aus dem Nichts geboren.',
+'Gute Tage sind nicht die, an denen wir nichts tun, sondern die, an denen wir viel tun.',
+'Hochmut kommt vor dem Fall.','Hoffen ist der erste Schritt, aber nicht der letzte.',
+'Ich denke, also bin ich.','Im Erdboden liegen die Wurzeln, im Herzen die Gedanken.',
+'Immer lachen, immer frei, das Glück kommt vorbei.','In jedem Sack Korn spielt ein Körnchen.',
+'Jeder Morgen ein neues Leben.','Jeder Schuh hat seinen Weg.',
+'Jugend braucht Liebe, Liebe braucht Zeit.','Kein Dampf ohne Wasser, kein Feuer ohne Asche.',
+'Kleine Geschenke erhalten die Freundschaft.','Kommt der Tod, so soll er uns nicht finden beim Schlafen.',
+'Kuchen ist schön, aber Geld ist besser.','Kümmer dich nicht um dein täglich Brot, morgen kommt es.',
+'Lebe heute wie gestern, das ist keine Torheit.','Man fängt nicht an, und jeder fängt an.',
+'Man sieht nur mit dem Herzen gut.','Man wird nicht so, wie man sich wünscht.',
+'Mein Freund ist der, der mich zum Lachen bringt, wenn ich weinen muss.',
+'Morgen haben wir, das Heute ist unsere Zeit.','Morgen ist die Zukunft, heute schon Realität.',
+'Mühe allein macht nicht reich.','Nicht alles, was man zählt, hat Gewicht.',
+'Nichts ist so beständig wie der Wetterbericht.','Nicht jeder Freund ist gut, aber jeder Feind ist jemand.',
+'Nur wer die Vergangenheit kennt, hat die Zukunft vor Augen.','Ohne Arbeit keine Feste.',
+'Über jedem Gipfel liegt ein Weg.','Überall ist gut, nur nicht in der Fremde.',
+'Umsonst ist der Rat nicht.','Und wenn es dir an etwas mangelt, so ist es sicher an dir.',
+'Vater werden, Mutter sein, Kind sein – die besten Jahre.',
+'Verstanden hat man die Welt nicht.','Viel geredet und wenig gesagt – so kommt es, dass es einerlei klingt.',
+'Viele Wege führen nach Rom, der kürzeste nicht.','Vom Regen kommt das Wetter, vom Denken die Rede.',
+'Von eigenem Brot satt zu werden ist das beste Fest.','Wasser, Grund und Feuer – alles hat seinen Grund.',
+'Wehmut, Reue und Zorn tun dem Menschen nichts als Leid.','Wenn es regnet und der Boden nass ist, dann wächst was.',
+'Wenn sie einmal anfangen, kommen sie schwer wieder zum Halten.','Wissen und Macht haben wenig gemeinsam.',
+'Wo man singet, kann man nicht fürchten.','Wo nichts zu loben ist, muss man nicht suchen.',
+'Zeit heilt alle Wunden, außer die, die man behalten will.',
+'Zwei sind mehr als einer, drei noch mehr.','Zwei streiten sich und haben beide recht.' ];
+
+var ICONS={};
+ICONS.klar='<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-width="5" stroke-linecap="round"><circle cx="48" cy="48" r="20"/><path d="M48 8v12M48 76v12M8 48h12M76 48h12M20 20l9 9M67 67l9 9M76 20l-9 9M29 67l-9 9"/></g></svg>';
+ICONS.partly='<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-width="5" stroke-linecap="round"><circle cx="36" cy="34" r="15"/><path d="M36 6v9M36 53v9M8 34h9M55 34h9M16 14l7 7M49 47l7 7M56 14l-7 7M23 47l-7 7"/><path d="M30 74h40a14 14 0 0 0 0-28 20 20 0 0 0-37-4 15 15 0 0 0-3 32z"/></g></svg>';
+ICONS.cloudy='<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M26 72h44a16 16 0 0 0 0-32 22 22 0 0 0-41-5 17 17 0 0 0-3 37z"/><path d="M44 48h34a14 14 0 0 0-4-27 22 22 0 0 0-40 5"/></g></svg>';
+ICONS.fog='<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M28 54h42a14 14 0 0 0 0-28 20 20 0 0 0-37-4 15 15 0 0 0-5 32z"/><path d="M14 68h68M20 80h56M32 92h32"/></g></svg>';
+ICONS.rain='<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M26 54h44a15 15 0 0 0 0-30 21 21 0 0 0-39-4 16 16 0 0 0-5 34z"/><path d="M28 68l-6 14M48 68l-6 14M68 68l-6 14"/></g></svg>';
+ICONS.snow='<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M26 54h44a15 15 0 0 0 0-30 21 21 0 0 0-39-4 16 16 0 0 0-5 34z"/><path d="M28 72h.01M48 72h.01M68 72h.01M38 88h.01M58 88h.01"/></g></svg>';
+ICONS.thunder='<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M26 50h44a15 15 0 0 0 0-30 21 21 0 0 0-39-4 16 16 0 0 0-5 34z"/><path d="M50 60L34 82h14l-4 14 20-24H50l8-12"/></g></svg>';
+
+function lastSundayUTC(y,m){
+  var d=new Date(Date.UTC(y,m+1,0));
+  while(d.getUTCDay()!==0){d.setUTCDate(d.getUTCDate()-1);}
+  return d;
+}
+function dstHours(now){
+  var y=now.getUTCFullYear();
+  var a=lastSundayUTC(y,2);a.setUTCHours(1);
+  var b=lastSundayUTC(y,9);b.setUTCHours(1);
+  var t=now.getTime();
+  if(t>=a.getTime()&&t<b.getTime()){return 2;}
+  return 1;
+}
+function berlin(){
+  var n=new Date();
+  var b=new Date(n.getTime()+dstHours(n)*3600000);
+  var p={wd:b.getUTCDay(),y:b.getUTCFullYear(),mo:b.getUTCMonth(),d:b.getUTCDate(),
+         h:b.getUTCHours(),mi:b.getUTCMinutes()};
+  p.hh=(p.h<10?'0':'')+p.h;
+  p.mm=(p.mi<10?'0':'')+p.mi;
+  p.tz=dstHours(n)===2?'MESZ':'MEZ';
+  return p;
+}
+function pad2(s){s=''+s;return s.length<2?'0'+s:s;}
+function timeHHMM(iso){var i=iso.indexOf('T');return pad2(iso.substr(i+1,2))+':'+pad2(iso.substr(i+4,2));}
+
+function wmo(code){
+  if(code===0){return['klar','Klar'];}
+  if(code===1){return['klar','Überwiegend klar'];}
+  if(code===2){return['partly','Teilweise bewölkt'];}
+  if(code===3){return['cloudy','Bewölkt'];}
+  if(code===45||code===48){return['fog','Nebel'];}
+  if(code>=51&&code<=57){return['rain','Nieselregen'];}
+  if(code>=61&&code<=67){return['rain','Regen'];}
+  if(code>=71&&code<=77){return['snow','Schneefall'];}
+  if(code>=80&&code<=82){return['rain','Regenschauer'];}
+  if(code===85||code===86){return['snow','Schneeschauer'];}
+  if(code>=95){return['thunder','Gewitter'];}
+  return['cloudy','Wetter'];
+}
+function wmoIcon(code){return wmo(code)[0];}
+function wmoText(code){return wmo(code)[1];}
+
+/* Fallback: deutsche Bedingungstexte -> Icon.
+   Umlaute werden vorher transkribiert, sonst matcht z.B. 'bewölkt' nicht auf 'wolk'. */
+function iconFromText(t){
+  var s=(''+t).toLowerCase();
+  s=s.replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss');
+  if(s.indexOf('gewitter')>=0||s.indexOf('thunder')>=0||s.indexOf('sturm')>=0
+     ||s.indexOf('donner')>=0||s.indexOf('blitz')>=0||s.indexOf('orkan')>=0
+     ||s.indexOf('tornado')>=0){return'thunder';}
+  if(s.indexOf('schne')>=0||s.indexOf('snow')>=0||s.indexOf('eisregen')>=0){return'snow';}
+  if(s.indexOf('regen')>=0||s.indexOf('rain')>=0||s.indexOf('schauer')>=0
+     ||s.indexOf('drizzle')>=0||s.indexOf('niesel')>=0||s.indexOf('wolkenbruch')>=0
+     ||s.indexOf('sleet')>=0){return'rain';}
+  if(s.indexOf('nebel')>=0||s.indexOf('fog')>=0||s.indexOf('mist')>=0
+     ||s.indexOf('dunst')>=0||s.indexOf('schleier')>=0){return'fog';}
+  if(s.indexOf('teilweise')>=0||s.indexOf('wechselnd')>=0||s.indexOf('wechselhaft')>=0
+     ||s.indexOf('vereinzelt')>=0){return'partly';}
+  if(s.indexOf('wolk')>=0||s.indexOf('woelk')>=0||s.indexOf('cloud')>=0
+     ||s.indexOf('bedeckt')>=0||s.indexOf('trueb')>=0||s.indexOf('trub')>=0
+     ||s.indexOf('grau')>=0||s.indexOf('bewolkt')>=0){return'cloudy';}
+  if(s.indexOf('klar')>=0||s.indexOf('sonnig')>=0||s.indexOf('sunny')>=0
+     ||s.indexOf('heiter')>=0){return'klar';}
+  return'partly';
+}
+
+/* Pinneberg Stadtzentrum (Rathaus), ca. 53.6589 N / 9.7970 E */
+var OM_URL='http://api.open-meteo.com/v1/forecast?latitude=53.6589&longitude=9.7970'
+  +'&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m'
+  +'&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset'
+  +'&timezone=Europe%2FBerlin&forecast_days=1';
+var WTR_URL='http://wttr.in/Pinneberg?format=%25t%7C%25f%7C%25C%7C%25w&lang=de';
+
+var KEY='pinneberg_wx_v1';
+var TTL=30*60*1000;
+
+function lsGet(){try{return window.localStorage.getItem(KEY);}catch(e){return null;}}
+function lsSet(v){try{window.localStorage.setItem(KEY,v);}catch(e){}}
+function lsGet2(k){try{return window.localStorage.getItem(k);}catch(e){return null;}}
+
+/* Millisekunden bis zur naechsten vollen Minute (minuetlicher Refresh).
+   ACHTUNG: Sekunden der laufenden Minute, NICHT Minuten der laufenden Stunde. */
+function msToNextMinute(){
+  var n=new Date();
+  return (60-n.getUTCSeconds())*1000-n.getUTCMilliseconds()+250;
+}
+
+function render(){
+  var p=berlin();
+  document.getElementById('woche').innerHTML=WD[p.wd];
+  document.getElementById('datum').innerHTML=p.d+' '+MO[p.mo]+' '+p.y;
+  document.getElementById('zeit').innerHTML=p.hh+':'+p.mm;
+
+  var doy=Math.floor((Date.UTC(p.y,p.mo,p.d)-Date.UTC(p.y,0,1))/86400000);
+  var s=SPRUECHE[((doy%SPRUECHE.length)+SPRUECHE.length)%SPRUECHE.length];
+  document.getElementById('stext').innerHTML='„'+s+'“';
+  document.getElementById('sautor').innerHTML='';
+
+  setTimeout(function(){render();},msToNextMinute());
+}
+
+function setStatus(txt){document.getElementById('status').innerHTML=txt;}
+
+function showWeather(w,live,label){
+  document.getElementById('wicon').innerHTML=ICONS[w.icon]||ICONS.cloudy;
+  document.getElementById('wtemp').innerHTML=w.temp+'°';
+  document.getElementById('wtext').innerHTML=w.text;
+  var d='';
+  if(w.wind!==''&&w.wind!==null&&w.wind!==undefined){d+='Wind '+w.wind+' km/h';}
+  if(w.feels!==''&&w.feels!==null&&w.feels!==undefined){d+=(d?' · ':'')+'Gefühlt '+w.feels+'°';}
+  document.getElementById('wdetail').innerHTML=d;
+  var tag=label?label:(live?'live':'nicht aktuell');
+  document.getElementById('status').innerHTML='Stand '+w.time+' · '+tag;
+}
+
+function parseOM(d){
+  var c=d.current,dy=d.daily;
+  var m=wmo(c.weather_code);
+  var w={temp:Math.round(c.temperature_2m),feels:Math.round(c.apparent_temperature),
+    wind:Math.round(c.wind_speed_10m),icon:m[0],text:m[1],
+    hi:Math.round(dy.temperature_2m_max[0]),lo:Math.round(dy.temperature_2m_min[0]),
+    sunrise:timeHHMM(dy.sunrise[0]),sunset:timeHHMM(dy.sunset[0]),
+    time:c.time.substr(11,5)};
+  return w;
+}
+function parseWTR(txt){
+  txt=(''+txt);
+  /* wttr.in erkennt den Browser am User-Agent und liefert die Ausgabe dann
+     HTML-verpackt (~12 KB): <div class="term-container">DATEN</div>.
+     Wir ziehen nur den Inhalt heraus, sonst wuerde der Parser aus den
+     CSS-Farbwerten (#8a8a8a, #16...) wilde Zahlen extrahieren. */
+  if(txt.indexOf('<')>=0){
+    var m=txt.match(/term-container">([^<]*)</);
+    txt=m?m[1]:txt.replace(/<[^>]*>/g,'');
+  }
+  /* HTML-Entities zurueck (wttr.in schreibt z.B. &#47; fuer '/') */
+  txt=txt.replace(/&#(\d+);/g,function(_,n){return String.fromCharCode(n);})
+         .replace(/&#x([0-9a-fA-F]+);/g,function(_,h){return String.fromCharCode(parseInt(h,16));})
+         .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+         .replace(/&quot;/g,'"').replace(/&nbsp;/g,' ');
+  var a=txt.split('|');
+  if(a.length<3){return null;}
+  /* Temperatur: Minuszeichen erhalten (-4°C -> -4) */
+  function num(s){s=(''+s).replace(/[^0-9-]/g,'');return s===''?'':parseInt(s,10);}
+  /* Wind: nur Ziffern, damit Richtungspfeile (-> ab) und 'km/h' wegfallen */
+  function windNum(s){s=(''+s).replace(/[^0-9]/g,'');return s===''?'':parseInt(s,10);}
+  var t=num(a[0]),f=num(a[1]),c=(a[2]||'').replace(/^\s+|\s+$/g,'');
+  if(t===''||c===''){return null;}
+  var p=berlin();
+  return{temp:t,feels:f,wind:windNum(a[3]),icon:iconFromText(c),text:c,
+    hi:null,lo:null,sunrise:null,sunset:null,time:p.hh+':'+p.mm};
+}
+
+function xhr(url,cb,fail){
+  var x=new XMLHttpRequest();
+  var done=false;
+  function to(){if(!done){done=true;fail();}}
+  try{x.open('GET',url,true);}catch(e){to();return;}
+  x.onreadystatechange=function(){
+    if(x.readyState===4){
+      if(done){return;}
+      if(x.status===200&&x.responseText){done=true;cb(x.responseText);}
+      else{to();}
+    }
+  };
+  x.ontimeout=to;x.onerror=to;
+  try{x.timeout=8000;x.send(null);}catch(e){to();}
+}
+
+function loadWeather(){
+  xhr(OM_URL,function(txt){
+    var d=null;
+    try{d=JSON.parse(txt);}catch(e){}
+    if(!d||!d.current){xhrWTR();return;}
+    var w=parseOM(d);
+    lsSet(JSON.stringify(w));
+    showWeather(w,true);
+  },xhrWTR);
+}
+/* wttr.in ist rate-limited. Wir markieren jeden Fallback-Versuch und
+   versuchen es fruehestens nach TTL erneut. */
+var WKEY='pinneberg_wtr_try';
+function wtrBlocked(){
+  var raw=lsGet2(WKEY),t=0;
+  if(raw){t=parseInt(raw,10)||0;}
+  return t>0&&(new Date().getTime()-t)<TTL;
+}
+function markWtrTry(){
+  try{window.localStorage.setItem(WKEY,''+new Date().getTime());}catch(e){}
+}
+
+function xhrWTR(){
+  if(wtrBlocked()){failWeather('Fallback gedrosselt (wttr.in-Limit)');return;}
+  markWtrTry();
+  xhr(WTR_URL,function(txt){
+    var w=parseWTR(txt);
+    if(!w){failWeather();return;}
+    lsSet(JSON.stringify(w));
+    showWeather(w,true);
+  },failWeather);
+}
+function failWeather(note){
+  var raw=lsGet(),w=null;
+  if(raw){try{w=JSON.parse(raw);}catch(e){}}
+  if(w){showWeather(w,false,note);}
+  else{
+    document.getElementById('wicon').innerHTML=ICONS.cloudy;
+    document.getElementById('wtemp').innerHTML='--°';
+    document.getElementById('wtext').innerHTML='Wetter nicht verfügbar';
+    document.getElementById('wdetail').innerHTML='';
+    setStatus('Kein Netz oder HTTP blockiert (kein HTTPS auf dem Gerät)');
+  }
+}
+function boot(){
+  render();
+  var raw=lsGet(),w=null;
+  if(raw){try{w=JSON.parse(raw);}catch(e){}}
+  /* Zwischengespeicherte Werte sofort anzeigen, Netz laeuft im Hintergrund */
+  if(w){showWeather(w,false,'zwischengespeichert');}
+  loadWeather();
+}
+/* Ein Tap loest zuerst touchstart und danach einen synthetischen click aus.
+   Ohne Schalter wuerde zweimal neu geladen -> doppelte API-Abfragen. */
+var reloading=false;
+function tapReload(){
+  if(reloading){return;}
+  reloading=true;
+  document.location.reload();
+}
+document.addEventListener('touchstart',tapReload,false);
+document.addEventListener('click',tapReload,false);
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',boot,false);
+}else{boot();}
+</script>
+</body>
+</html>
