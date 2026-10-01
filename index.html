@@ -25,6 +25,7 @@ text-align:center;line-height:1.15}
 .wtemp{font-size:56px;-webkit-box-flex:0;margin-left:22px}
 .wzeile2{font-size:28px;color:#555;margin-top:10px}
 .wzeile3{font-size:24px;color:#666;margin-top:4px}
+.wzeile4{font-size:24px;color:#666;margin-top:4px}
 .spruch{-webkit-box-flex:0;margin:26px 30px 0;padding:18px 16px;border:1px solid #999}
 .stext{font-size:38px;line-height:1.25}
 .sautor{font-size:24px;color:#666;margin-top:10px}
@@ -53,6 +54,8 @@ text-align:center;line-height:1.15}
     </div>
     <div class="wzeile2" id="wtext">&nbsp;</div>
     <div class="wzeile3" id="wdetail">&nbsp;</div>
+    <div class="wzeile3" id="whl">&nbsp;</div>
+    <div class="wzeile4" id="wsun">&nbsp;</div>
   </div>
 
   <div class="spruch" id="spruch">
@@ -234,14 +237,29 @@ function render(){
 
 function setStatus(txt){document.getElementById('status').innerHTML=txt;}
 
+/* Leerer Sichtbarkeitsschalter: verhindert, dass eine leere Zeile (z.B. bei
+   wttr-Fallback, wo es keine Hoch/Tief-Werte gibt) trotzdem Hoehe belegt. */
+function hide(id){var e=document.getElementById(id);e.innerHTML='';e.style.display='none';}
+function show(id,txt){var e=document.getElementById(id);e.style.display='';e.innerHTML=txt;}
+function hasNum(v){return v!==''&&v!==null&&v!==undefined&&!isNaN(v);}
+
 function showWeather(w,live,label){
   document.getElementById('wicon').innerHTML=ICONS[w.icon]||ICONS.cloudy;
   document.getElementById('wtemp').innerHTML=w.temp+'°';
   document.getElementById('wtext').innerHTML=w.text;
   var d='';
-  if(w.wind!==''&&w.wind!==null&&w.wind!==undefined){d+='Wind '+w.wind+' km/h';}
-  if(w.feels!==''&&w.feels!==null&&w.feels!==undefined){d+=(d?' · ':'')+'Gefühlt '+w.feels+'°';}
-  document.getElementById('wdetail').innerHTML=d;
+  if(hasNum(w.wind)){d+='Wind '+w.wind+' km/h';}
+  if(hasNum(w.feels)){d+=(d?' · ':'')+'Gefühlt '+w.feels+'°';}
+  if(d){show('wdetail',d);}else{hide('wdetail');}
+  /* Tages-Hoechst- und Tiefstwert (nur Open-Meteo liefert diese) */
+  if(hasNum(w.hi)&&hasNum(w.lo)){
+    show('whl','Hoch '+w.hi+'° · Tief '+w.lo+'°');
+  }else{
+    hide('whl');
+  }
+  /* Sonnenauf- und -untergang in Berlin-Zeit (nur Open-Meteo) */
+  if(w.sunrise&&w.sunset){show('wsun','Sonne '+w.sunrise+' – '+w.sunset);}
+  else{hide('wsun');}
   var tag=label?label:(live?'live':'nicht aktuell');
   document.getElementById('status').innerHTML='Stand '+w.time+' · '+tag;
 }
@@ -340,7 +358,7 @@ function failWeather(note){
     document.getElementById('wicon').innerHTML=ICONS.cloudy;
     document.getElementById('wtemp').innerHTML='--°';
     document.getElementById('wtext').innerHTML='Wetter nicht verfügbar';
-    document.getElementById('wdetail').innerHTML='';
+    hide('wdetail');hide('whl');hide('wsun');
     setStatus('Kein Netz oder HTTP blockiert (kein HTTPS auf dem Gerät)');
   }
 }
