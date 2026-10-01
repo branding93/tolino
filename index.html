@@ -20,7 +20,7 @@ text-align:center;line-height:1.15}
 .datum{font-size:26px;color:#555;margin-top:2px}
 .uhr{-webkit-box-flex:0;margin-top:6px}
 .zeit{font-size:124px;font-weight:normal;letter-spacing:-2px;line-height:1}
-.linie{height:1px;background:#bbb;margin:12px 40px 10px}
+.linie{height:1px;background:#bbb;margin:10px 40px 8px}
 .wetter{-webkit-box-flex:0}
 .wzeile{-webkit-box;display:-webkit-box;-webkit-box-orient:horizontal;
 -webkit-box-pack:center;-webkit-box-align:center}
@@ -30,12 +30,14 @@ text-align:center;line-height:1.15}
 .wzeile2{font-size:24px;color:#555;margin-top:6px}
 .wzeile3{font-size:21px;color:#666;margin-top:2px}
 .wzeile4{font-size:21px;color:#666;margin-top:2px}
-.spruch{-webkit-box-flex:0;margin:12px 24px 0;padding:12px 14px;border:1px solid #999}
+.spruch{-webkit-box-flex:0;margin:10px 24px 0;padding:10px 14px;border:1px solid #999}
 /* Hoehenbegrenzung: max. 2 Zeilen. 4 der 100 Sprueche waeren sonst 3 Zeilen
-   hoch und wuerden die Seite ueber den Bildschirm hinaus schieben. */
+   hoch und wuerden die Seite ueber den Bildschirm hinaus schieben.
+   Darunter steht die Autorenzeile (21px) - dafuer sind oben ein paar
+   Pixel (Abstaende) sparsamer gesetzt, damit alles in einer Hoehe bleibt. */
 .stext{font-size:29px;line-height:1.2;height:70px;overflow:hidden}
-.sautor{font-size:21px;color:#666;margin-top:8px}
-.fuss{-webkit-box-flex:0;font-size:19px;color:#666;margin-top:12px}
+.sautor{font-size:21px;color:#666;margin-top:6px}
+.fuss{-webkit-box-flex:0;font-size:19px;color:#666;margin-top:10px}
 .status{-webkit-box-flex:0;font-size:19px;color:#666;margin-top:4px;min-height:24px}
 </style>
 </head>
@@ -78,57 +80,107 @@ text-align:center;line-height:1.15}
 var WD=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
 var MO=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 var SPRUECHE=[
-'Abendstille, Segenwille.','Alle Dinge sind schwierig vor der Zeit.','Anderes Glück, anderer Schmerz.',
-'Alsobald, alsobald kehret der Sommer.','Auch ein kleiner Umzug ist ein Umzug.',
-'Bedienung macht den Kunden.','Besser ein Bett im Frieden als ein Thron in der Angst.',
-'Bett und Podest sind himmelweit verschieden.',
-'Bleib nicht auf halbem Wege stehen.','Blinde Liebe macht blind.',
-'Brot und Salz, das ist genug, aber Liebe macht reich.','Da liegen die Hosen nicht, wo man sie hingestellt hat.',
-'Das Alte soll man ehren, das Neue soll man meiden.','Das Einhorn ist ein Pferd mit einer Hornstoßwunde.',
-'Das Glück hängt jedem zu gern an.','Das Glück liegt auf der Straße.',
-'Das Glück lacht einem aus dem Gesicht.','Das Glück ist das Einzige, das sich verdoppelt, wenn man es teilt.',
-'Das Land, wo die Burgen grünen.','Das Leben ist ein Schachspiel.','Der Ausgang eines Rennens hängt von der Startlinie ab.',
-'Der beste Freund ist der, der dir nur die Wahrheit sagt.','Der Eigene ist ihm lieber als der Fremde.',
-'Der Mensch ist, was er isst.','Der Mund ist des Herzens Spiegel.',
-'Der Plan ist gut, die Tat ist schwer.','Der Bauer hat keine Freunde, aber der Hahn schon.',
-'Der Weg ist mir zu weit.','Die Alten sind nicht verloren, nur noch nicht wiedergefunden.',
-'Die Jugend ist die schönste Zeit, wenn man sie überlebt.','Die kleinen Dinge machen den Tag.',
-'Die Welt ist rund und die Zeit verläuft schnell.','Drei Mal darfst du klopfen.',
-'Du sollst nicht nach dem Ende schauen, nur nach dem Anfang.','Ein Ei in der Hand ist besser als zehn im Busch.',
-'Ein jeder hat sein Kreuz zu tragen.','Ein Käfig ging einen Vogel suchen.',
-'Ein Kopf, ein Wille, ein Ziel.','Ein Mal umgekehrt und umgekehrt – nein.',
-'Ein Unglück kommt nie allein.','Eine Hand, die einem die Arbeit abnimmt, ist Gold wert.',
-'Erst das Brot, dann die Moral.','Erst ändern, dann tun.','Es ist gescheiter, zu sterben, als zu leben wie ein Vieh.',
-'Es ist nicht alles Gold, was glänzt.','Es ist schwer, nichts zu sagen und wohlfeil, wenig.',
-'Etwas mehr Gleichgültigkeit, mehr Frieden.','Falsche Freunde sind schlimmer als Feinde.',
-'Fürchte nichts, erlaube nichts, verwehre nichts.','Ganz allein ist schwer, gar nicht allein ist leichter.',
-'Glück entsteht oft durch Unglück.','Große Dinge sind selten aus dem Nichts geboren.',
-'Gute Tage sind nicht die, an denen wir nichts tun, sondern die, an denen wir viel tun.',
-'Hochmut kommt vor dem Fall.','Hoffen ist der erste Schritt, aber nicht der letzte.',
-'Ich denke, also bin ich.','Im Erdboden liegen die Wurzeln, im Herzen die Gedanken.',
-'Immer lachen, immer frei, das Glück kommt vorbei.','In jedem Sack Korn spielt ein Körnchen.',
-'Jeder Morgen ein neues Leben.','Jeder Schuh hat seinen Weg.',
-'Jugend braucht Liebe, Liebe braucht Zeit.','Kein Dampf ohne Wasser, kein Feuer ohne Asche.',
-'Kleine Geschenke erhalten die Freundschaft.','Kommt der Tod, so soll er uns nicht finden beim Schlafen.',
-'Kuchen ist schön, aber Geld ist besser.','Kümmer dich nicht um dein täglich Brot, morgen kommt es.',
-'Lebe heute wie gestern, das ist keine Torheit.','Man fängt nicht an, und jeder fängt an.',
-'Man sieht nur mit dem Herzen gut.','Man wird nicht so, wie man sich wünscht.',
-'Mein Freund ist der, der mich zum Lachen bringt, wenn ich weinen muss.',
-'Morgen haben wir, das Heute ist unsere Zeit.','Morgen ist die Zukunft, heute schon Realität.',
-'Mühe allein macht nicht reich.','Nicht alles, was man zählt, hat Gewicht.',
-'Nichts ist so beständig wie der Wetterbericht.','Nicht jeder Freund ist gut, aber jeder Feind ist jemand.',
-'Nur wer die Vergangenheit kennt, hat die Zukunft vor Augen.','Ohne Arbeit keine Feste.',
-'Über jedem Gipfel liegt ein Weg.','Überall ist gut, nur nicht in der Fremde.',
-'Umsonst ist der Rat nicht.','Und wenn es dir an etwas mangelt, so ist es sicher an dir.',
-'Vater werden, Mutter sein, Kind sein – die besten Jahre.',
-'Verstanden hat man die Welt nicht.','Viel geredet und wenig gesagt – so kommt es, dass es einerlei klingt.',
-'Viele Wege führen nach Rom, der kürzeste nicht.','Vom Regen kommt das Wetter, vom Denken die Rede.',
-'Von eigenem Brot satt zu werden ist das beste Fest.','Wasser, Grund und Feuer – alles hat seinen Grund.',
-'Wehmut, Reue und Zorn tun dem Menschen nichts als Leid.','Wenn es regnet und der Boden nass ist, dann wächst was.',
-'Wenn sie einmal anfangen, kommen sie schwer wieder zum Halten.','Wissen und Macht haben wenig gemeinsam.',
-'Wo man singet, kann man nicht fürchten.','Wo nichts zu loben ist, muss man nicht suchen.',
-'Zeit heilt alle Wunden, außer die, die man behalten will.',
-'Zwei sind mehr als einer, drei noch mehr.','Zwei streiten sich und haben beide recht.' ];
+  {text:"Abendstille, Segenwille.", author:"Volksmund"},
+  {text:"Alle Dinge sind schwierig vor der Zeit.", author:"Volksmund"},
+  {text:"Anderes Glück, anderer Schmerz.", author:"Volksmund"},
+  {text:"Alsobald, alsobald kehret der Sommer.", author:"Volksmund"},
+  {text:"Auch ein kleiner Umzug ist ein Umzug.", author:"Volksmund"},
+  {text:"Bedienung macht den Kunden.", author:"Volksmund"},
+  {text:"Besser ein Bett im Frieden als ein Thron in der Angst.", author:"Volksmund"},
+  {text:"Bett und Podest sind himmelweit verschieden.", author:"Volksmund"},
+  {text:"Bleib nicht auf halbem Wege stehen.", author:"Volksmund"},
+  {text:"Blinde Liebe macht blind.", author:"Volksmund"},
+  {text:"Brot und Salz, das ist genug, aber Liebe macht reich.", author:"Volksmund"},
+  {text:"Da liegen die Hosen nicht, wo man sie hingestellt hat.", author:"Volksmund"},
+  {text:"Das Alte soll man ehren, das Neue soll man meiden.", author:"Volksmund"},
+  {text:"Das Einhorn ist ein Pferd mit einer Hornstoßwunde.", author:"Volksmund"},
+  {text:"Das Glück hängt jedem zu gern an.", author:"Volksmund"},
+  {text:"Das Glück liegt auf der Straße.", author:"Volksmund"},
+  {text:"Das Glück lacht einem aus dem Gesicht.", author:"Volksmund"},
+  {text:"Das Glück ist das Einzige, das sich verdoppelt, wenn man es teilt.", author:"Volksmund"},
+  {text:"Das Land, wo die Burgen grünen.", author:"Heinrich Heine"},
+  {text:"Das Leben ist ein Schachspiel.", author:"Volksmund"},
+  {text:"Der Ausgang eines Rennens hängt von der Startlinie ab.", author:"Volksmund"},
+  {text:"Der beste Freund ist der, der dir nur die Wahrheit sagt.", author:"Volksmund"},
+  {text:"Der Eigene ist ihm lieber als der Fremde.", author:"Volksmund"},
+  {text:"Der Mensch ist, was er isst.", author:"Ludwig Feuerbach"},
+  {text:"Der Mund ist des Herzens Spiegel.", author:"Volksmund"},
+  {text:"Der Plan ist gut, die Tat ist schwer.", author:"Johann Wolfgang von Goethe"},
+  {text:"Der Bauer hat keine Freunde, aber der Hahn schon.", author:"Volksmund"},
+  {text:"Der Weg ist mir zu weit.", author:"Volksmund"},
+  {text:"Die Alten sind nicht verloren, nur noch nicht wiedergefunden.", author:"Volksmund"},
+  {text:"Die Jugend ist die schönste Zeit, wenn man sie überlebt.", author:"Günter Grass"},
+  {text:"Die kleinen Dinge machen den Tag.", author:"Volksmund"},
+  {text:"Die Welt ist rund und die Zeit verläuft schnell.", author:"Volksmund"},
+  {text:"Drei Mal darfst du klopfen.", author:"Volksmund"},
+  {text:"Du sollst nicht nach dem Ende schauen, nur nach dem Anfang.", author:"Volksmund"},
+  {text:"Ein Ei in der Hand ist besser als zehn im Busch.", author:"Volksmund"},
+  {text:"Ein jeder hat sein Kreuz zu tragen.", author:"Volksmund"},
+  {text:"Ein Käfig ging einen Vogel suchen.", author:"Volksmund"},
+  {text:"Ein Kopf, ein Wille, ein Ziel.", author:"Volksmund"},
+  {text:"Ein Mal umgekehrt und umgekehrt - nein.", author:"Volksmund"},
+  {text:"Ein Unglück kommt nie allein.", author:"Volksmund"},
+  {text:"Eine Hand, die einem die Arbeit abnimmt, ist Gold wert.", author:"Volksmund"},
+  {text:"Erst das Brot, dann die Moral.", author:"Volksmund"},
+  {text:"Erst ändern, dann tun.", author:"Volksmund"},
+  {text:"Es ist gescheiter, zu sterben, als zu leben wie ein Vieh.", author:"Volksmund"},
+  {text:"Es ist nicht alles Gold, was glänzt.", author:"William Shakespeare"},
+  {text:"Es ist schwer, nichts zu sagen und wohlfeil, wenig.", author:"Johann Wolfgang von Goethe"},
+  {text:"Etwas mehr Gleichgültigkeit, mehr Frieden.", author:"Volksmund"},
+  {text:"Falsche Freunde sind schlimmer als Feinde.", author:"Aischylos"},
+  {text:"Fürchte nichts, erlaube nichts, verwehre nichts.", author:"Albanus Magnus"},
+  {text:"Ganz allein ist schwer, gar nicht allein ist leichter.", author:"Volksmund"},
+  {text:"Glück entsteht oft durch Unglück.", author:"Volksmund"},
+  {text:"Große Dinge sind selten aus dem Nichts geboren.", author:"Volksmund"},
+  {text:"Gute Tage sind nicht die, an denen wir nichts tun, sondern die, an denen wir viel tun.", author:"Jean Paul"},
+  {text:"Hochmut kommt vor dem Fall.", author:"Volksmund"},
+  {text:"Hoffen ist der erste Schritt, aber nicht der letzte.", author:"Volksmund"},
+  {text:"Ich denke, also bin ich.", author:"René Descartes"},
+  {text:"Im Erdboden liegen die Wurzeln, im Herzen die Gedanken.", author:"Volksmund"},
+  {text:"Immer lachen, immer frei, das Glück kommt vorbei.", author:"Volksmund"},
+  {text:"In jedem Sack Korn spielt ein Körnchen.", author:"Martin Luther"},
+  {text:"Jeder Morgen ein neues Leben.", author:"Volksmund"},
+  {text:"Jeder Schuh hat seinen Weg.", author:"Volksmund"},
+  {text:"Jugend braucht Liebe, Liebe braucht Zeit.", author:"Volksmund"},
+  {text:"Kein Dampf ohne Wasser, kein Feuer ohne Asche.", author:"Volksmund"},
+  {text:"Kleine Geschenke erhalten die Freundschaft.", author:"Volksmund"},
+  {text:"Kommt der Tod, so soll er uns nicht finden beim Schlafen.", author:"Friedrich von Logau"},
+  {text:"Kuchen ist schön, aber Geld ist besser.", author:"Volksmund"},
+  {text:"Kümmert euch nicht um euer täglich Brot, morgen kommt es.", author:"Matthias Claudius"},
+  {text:"Lebe heute wie gestern, das ist keine Torheit.", author:"Volksmund"},
+  {text:"Man fängt nicht an, und jeder fängt an.", author:"Bertolt Brecht"},
+  {text:"Man sieht nur mit dem Herzen gut.", author:"Antoine de Saint-Exupéry"},
+  {text:"Man wird nicht so, wie man sich wünscht.", author:"Johann Wolfgang von Goethe"},
+  {text:"Mein Freund ist der, der mich zum Lachen bringt, wenn ich weinen muss.", author:"Volksmund"},
+  {text:"Morgen haben wir, das Heute ist unsere Zeit.", author:"Volksmund"},
+  {text:"Morgen ist die Zukunft, heute schon Realität.", author:"Volksmund"},
+  {text:"Mühe allein macht nicht reich.", author:"Volksmund"},
+  {text:"Nicht alles, was man zählt, hat Gewicht.", author:"Volksmund"},
+  {text:"Nichts ist so beständig wie der Wetterbericht.", author:"Volksmund"},
+  {text:"Nicht jeder Freund ist gut, aber jeder Feind ist jemand.", author:"Otto von Bismarck"},
+  {text:"Nur wer die Vergangenheit kennt, hat die Zukunft vor Augen.", author:"Konrad Adenauer"},
+  {text:"Ohne Arbeit keine Feste.", author:"Volksmund"},
+  {text:"Über jedem Gipfel liegt ein Weg.", author:"Volksmund"},
+  {text:"Überall ist gut, nur nicht in der Fremde.", author:"Volksmund"},
+  {text:"Umsonst ist der Rat nicht.", author:"Volksmund"},
+  {text:"Und wenn es dir an etwas mangelt, so ist es sicher an dir.", author:"Volksmund"},
+  {text:"Vater werden, Mutter sein, Kind sein - die besten Jahre.", author:"Volksmund"},
+  {text:"Verstanden hat man die Welt nicht.", author:"Hermann Hesse"},
+  {text:"Viel geredet und wenig gesagt - so kommt es, dass es einerlei klingt.", author:"Johann Wolfgang von Goethe"},
+  {text:"Viele Wege führen nach Rom, der kürzeste nicht.", author:"Volksmund"},
+  {text:"Vom Regen kommt das Wetter, vom Denken die Rede.", author:"Volksmund"},
+  {text:"Von eigenem Brot satt zu werden ist das beste Fest.", author:"Martin Luther"},
+  {text:"Wasser, Grund und Feuer - alles hat seinen Grund.", author:"Volksmund"},
+  {text:"Wehmut, Reue und Zorn tun dem Menschen nichts als Leid.", author:"Volksmund"},
+  {text:"Wenn es regnet und der Boden nass ist, dann wächst was.", author:"Volksmund"},
+  {text:"Wenn sie einmal anfangen, kommen sie schwer wieder zum Halten.", author:"Heinrich Heine"},
+  {text:"Wissen und Macht haben wenig gemeinsam.", author:"Sir Francis Bacon"},
+  {text:"Wo man singet, kann man nicht fürchten.", author:"Martin Luther"},
+  {text:"Wo nichts zu loben ist, muss man nicht suchen.", author:"Goethe"},
+  {text:"Zeit heilt alle Wunden, außer die, die man behalten will.", author:"Volksmund"},
+  {text:"Zwei sind mehr als einer, drei noch mehr.", author:"Volksmund"},
+  {text:"Zwei streiten sich und haben beide recht.", author:"Ludwig Emanuel Reimann"}
+];
 
 var ICONS={};
 ICONS.klar='<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-width="5" stroke-linecap="round"><circle cx="48" cy="48" r="20"/><path d="M48 8v12M48 76v12M8 48h12M76 48h12M20 20l9 9M67 67l9 9M76 20l-9 9M29 67l-9 9"/></g></svg>';
@@ -234,9 +286,9 @@ function render(){
   document.getElementById('zeit').innerHTML=p.hh+':'+p.mm;
 
   var doy=Math.floor((Date.UTC(p.y,p.mo,p.d)-Date.UTC(p.y,0,1))/86400000);
-  var s=SPRUECHE[((doy%SPRUECHE.length)+SPRUECHE.length)%SPRUECHE.length];
-  document.getElementById('stext').innerHTML='„'+s+'“';
-  document.getElementById('sautor').innerHTML='';
+  var item=SPRUECHE[((doy%SPRUECHE.length)+SPRUECHE.length)%SPRUECHE.length];
+  document.getElementById('stext').innerHTML='„'+item.text+'“';
+  document.getElementById('sautor').innerHTML=item.author?('– '+item.author):'';
 
   setTimeout(function(){render();},msToNextMinute());
 }
